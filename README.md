@@ -29,7 +29,6 @@ Konfigurasi desktop **Niri + Noctalia** (sesi utama) dan **KDE Plasma** (sesi al
 | **org.gnome.Nautilus** | File manager (dock) |
 | **kgx** (GNOME Console) | Terminal default |
 | **code-oss** | Editor |
-| **spotify-launcher** | Musik |
 | **gpu-screen-recorder** (`gsr-ui`) | Screen recorder |
 | **wl-clipboard** + **cliphist** | Clipboard history |
 | **easyeffects** | Audio effects |

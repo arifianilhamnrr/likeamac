@@ -279,7 +279,6 @@
             "firefox",
             "brave-browser",
             "org.gnome.Console",
-            "spotify-launcher",
             "code-oss"
         ],
         "pinnedStatic": true,

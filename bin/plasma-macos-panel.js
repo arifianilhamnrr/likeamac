@@ -125,7 +125,6 @@ if (dockPanel) {
         "preferred://filemanager",
         "preferred://browser",
         "applications:Alacritty.desktop",
-        "applications:spotify-launcher.desktop",
         "applications:code-oss.desktop",
         "applications:brave-browser.desktop"
     ]);
