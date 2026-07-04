@@ -99,6 +99,12 @@ link_configs() {
         link "$DOTFILES/config/$f" "$HOME/.config/$f"
     done
 
+    mkdir -p "$HOME/.config/niriswitcher"
+    if [[ -f "$DOTFILES/config/niriswitcher/config.toml" ]]; then
+        cp "$DOTFILES/config/niriswitcher/config.toml" "$HOME/.config/niriswitcher/config.toml"
+        echo "  installed $HOME/.config/niriswitcher/config.toml"
+    fi
+
     if [[ "${INSTALL_SWITCH_DESKTOP:-}" == "1" ]]; then
         sudo cp "$DOTFILES/bin/switch-desktop" /usr/local/bin/switch-desktop
         sudo cp "$DOTFILES/bin/switch-niri" /usr/local/bin/switch-niri

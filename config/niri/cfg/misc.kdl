@@ -24,3 +24,8 @@
     hotkey-overlay {
        skip-at-startup
     }
+
+// Disable Niri's thumbnail Alt+Tab; niriswitcher shows app icons instead.
+recent-windows {
+    off
+}

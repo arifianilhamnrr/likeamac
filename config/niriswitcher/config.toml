@@ -1,0 +1,48 @@
+separate_workspaces = false
+current_output_only = false
+double_click_to_hide = false
+center_on_focus = true
+log_level = "WARN"
+
+[appearance]
+icon_size = 96
+max_width = 720
+min_width = 480
+system_theme = "dark"
+workspace_format = "{idx}"
+
+[workspace]
+mru_sort_in_workspace = false
+mru_sort_across_workspace = true
+
+[appearance.animation.reveal]
+hide_duration = 150
+show_duration = 150
+easing = "ease-out-cubic"
+
+[appearance.animation.resize]
+duration = 150
+easing = "ease-in-out-cubic"
+
+[appearance.animation.workspace]
+duration = 150
+transition = "slide"
+
+[appearance.animation.switch]
+duration = 150
+easing = "ease-out-cubic"
+
+[keys]
+modifier = "Alt_L"
+
+[keys.switch]
+next = "Tab"
+prev = "Shift+Tab"
+
+[keys.window]
+close = "q"
+abort = "Escape"
+
+[keys.workspace]
+next = "grave"
+prev = "Shift+asciitilde"

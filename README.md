@@ -25,6 +25,7 @@ Konfigurasi desktop **Niri + Noctalia** dengan tema macOS (MacTahoe).
 | **nautilus** | File manager |
 | **kgx** (GNOME Console) | Terminal default |
 | **code-oss** | Editor |
+| **niriswitcher** | Alt+Tab app switcher (icons) |
 | **gpu-screen-recorder** (`gsr-ui`) | Screen recorder |
 | **wl-clipboard** + **cliphist** | Clipboard history |
 | **easyeffects** | Audio effects |
@@ -40,6 +41,8 @@ Konfigurasi desktop **Niri + Noctalia** dengan tema macOS (MacTahoe).
 
 | Shortcut | Aksi |
 |---|---|
+| `Alt+Tab` | App switcher (icons via niriswitcher) |
+| `Alt+grave` | Switch workspace (niriswitcher) |
 | `Mod+Space` | Noctalia launcher (Spotlight) |
 | `Mod+Return` | Terminal (kgx) |
 | `Mod+E` | Nautilus |
@@ -64,7 +67,10 @@ Fish abbreviation: `sn` → `switch-niri`
 sudo pacman -S niri noctalia-shell cachyos-niri-noctalia \
   gnome-console nautilus inter-font apple-fonts \
   capitaine-cursors wl-clipboard gpu-screen-recorder \
-  gpu-screen-recorder-ui easyeffects sassc git
+  gpu-screen-recorder-ui easyeffects sassc git \
+  gtk4-layer-shell python-pipx
+
+pipx install --system-site-packages git+https://github.com/isaksamsten/niriswitcher.git@0.7.1
 
 # Lihat packages.txt untuk daftar lengkap
 ```
@@ -104,6 +110,7 @@ dotfiles/
 │   ├── gtk-3.0/          # GTK3 theme + custom CSS
 │   ├── gtk-4.0/          # GTK4 theme
 │   ├── environment.d/    # Wayland/GTK env vars
+│   ├── niriswitcher/     # Alt+Tab icon switcher
 │   └── xsettingsd/       # X11 GTK settings fallback
 ├── gtk/.gtkrc-2.0
 ├── packages.txt

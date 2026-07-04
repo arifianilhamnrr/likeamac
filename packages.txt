@@ -3,6 +3,8 @@ sassc 3.6.5-1
 cachyos-niri-noctalia 1.1.2-1
 easyeffects 8.2.7-1.1
 gnome-console 50.0-1.1
+gtk4-layer-shell 1.3.0-1.1
+python-pipx 1.15.0-1
 gpu-screen-recorder 5.13.9-2.1
 gpu-screen-recorder-notification 1.3.3-1.1
 gpu-screen-recorder-ui 1.12.5-1.1
