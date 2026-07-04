@@ -1,0 +1,11 @@
+[Desktop Entry]
+Name=Termius
+Exec=/usr/bin/flatpak run --branch=stable --arch=x86_64 --command=termius --file-forwarding com.termius.Termius --enable-features=WaylandWindowDecorations --ozone-platform-hint=auto @@u %U @@
+Terminal=false
+Type=Application
+Icon=com.termius.Termius
+StartupWMClass=Termius
+Comment=Desktop SSH Client
+MimeType=x-scheme-handler/termius;
+Categories=Utility;
+X-Flatpak=com.termius.Termius

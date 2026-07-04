@@ -62,6 +62,39 @@ install_themes() {
     echo "  themes installed"
 }
 
+install_termius() {
+    if ! command -v flatpak >/dev/null 2>&1; then
+        echo "  skipping Termius setup (flatpak not installed)"
+        return 0
+    fi
+    if ! flatpak info com.termius.Termius >/dev/null 2>&1; then
+        echo "  skipping Termius setup (com.termius.Termius not installed)"
+        return 0
+    fi
+
+    echo "==> Configuring Termius (traffic-light decorations)"
+
+    mkdir -p "$HOME/.local/share/flatpak/overrides"
+    cp "$DOTFILES/config/flatpak/overrides/com.termius.Termius" \
+        "$HOME/.local/share/flatpak/overrides/com.termius.Termius"
+    flatpak override --user com.termius.Termius \
+        --unset-env=QT_WAYLAND_DISABLE_WINDOWDECORATION
+    echo "  applied flatpak overrides"
+
+    mkdir -p "$HOME/.local/share/applications"
+    cp "$DOTFILES/config/applications/com.termius.Termius.desktop" \
+        "$HOME/.local/share/applications/com.termius.Termius.desktop"
+    echo "  installed desktop entry"
+
+    local termius_config="$HOME/.var/app/com.termius.Termius/config"
+    mkdir -p "$termius_config/gtk-3.0" "$termius_config/gtk-4.0"
+    rm -f "$termius_config/gtk-3.0/settings.ini" "$termius_config/gtk-4.0/settings.ini"
+    cp "$DOTFILES/config/gtk-3.0/settings.ini" "$termius_config/gtk-3.0/settings.ini"
+    cp "$DOTFILES/config/gtk-4.0/settings.ini" "$termius_config/gtk-4.0/settings.ini"
+    cp "$DOTFILES/config/termius-flags.conf" "$termius_config/termius-flags.conf"
+    echo "  installed Termius sandbox GTK + flags config"
+}
+
 link_configs() {
     echo "==> Linking configs from $DOTFILES"
 
@@ -120,6 +153,7 @@ else
 fi
 
 link_configs
+install_termius
 
 echo ""
 echo "Done!"
