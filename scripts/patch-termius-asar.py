@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Patch Termius app.asar for native GTK traffic lights on Linux."""
+"""Patch Termius app.asar for native window frame on Linux (Electron 21)."""
 
 from __future__ import annotations
 
@@ -13,27 +13,18 @@ PATCHES: list[tuple[bytes, bytes, str]] = [
         "enable native frame on Linux",
     ),
     (
-        b'systemBarMainWindow:{display:"flex",marginTop:"8px",marginLeft:"1px",".full-screen.mac &":{display:"none"}',
-        b'systemBarMainWindow:{display:"none",marginTop:"8px",marginLeft:"1px",".full-screen.mac &":{display:"none"}',
-        "hide fake mac traffic-light decorations",
+        b'backgroundColor:this.type==="primary"?"transparent":"#101021",frame:!1,transparent:!1',
+        b'backgroundColor:this.type==="primary"?"transparent":"#101021",frame:!0,transparent:!1',
+        "enable frame in BrowserWindow defaults",
     ),
     (
-        b'actionType:"minimize"',
-        b'actionType:"disabled"',
-        "hide custom minimize button",
-    ),
-    (
-        b'actionType:"maximize"',
-        b'actionType:"disabled"',
+        b'{actionType:"disabled",buttonCallbacks:{onClick:or,onFocus:ir}},{actionType:"maximize",buttonCallbacks:{onClick:sr,onFocus:ir}},{actionType:"none_"',
+        b'{actionType:"disabled",buttonCallbacks:{onClick:or,onFocus:ir}},{actionType:"disabled",buttonCallbacks:{onClick:sr,onFocus:ir}},{actionType:"none_"',
         "hide custom maximize button",
-    ),
-    (
-        b'actionType:"close"',
-        b'actionType:"none_"',
-        "hide custom close button",
     ),
 ]
 
+# Unique marker for --check (frame enabled in BrowserWindow defaults).
 MARKER = PATCHES[1][1]
 
 
@@ -72,7 +63,7 @@ def main() -> int:
         return 0
 
     if patch(path):
-        print("patched Termius app.asar for native Linux traffic lights")
+        print("patched Termius app.asar for native Linux window frame")
     else:
         print("Termius app.asar already patched")
     return 0
