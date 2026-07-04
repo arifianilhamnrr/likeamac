@@ -1,6 +1,6 @@
 [Desktop Entry]
 Name=Termius
-Exec=/usr/bin/flatpak run --branch=stable --arch=x86_64 --command=sh --file-forwarding com.termius.Termius @TERMius_LAUNCH@ --enable-features=WaylandWindowDecorations --ozone-platform-hint=auto @@u %U @@
+Exec=/usr/bin/flatpak run --branch=stable --arch=x86_64 --command=termius --file-forwarding com.termius.Termius --enable-features=WaylandWindowDecorations --ozone-platform-hint=auto @@u %U @@
 Terminal=false
 Type=Application
 Icon=com.termius.Termius
