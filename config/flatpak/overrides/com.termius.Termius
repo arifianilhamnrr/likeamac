@@ -3,5 +3,6 @@ sockets=wayland;fallback-x11;
 
 [Environment]
 GTK_CSD=1
+GTK_THEME=MacTahoe-Dark
 ELECTRON_OZONE_PLATFORM_HINT=wayland
 XCURSOR_PATH=/run/host/user-share/icons:/run/host/share/icons
