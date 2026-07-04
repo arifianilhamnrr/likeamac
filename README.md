@@ -87,41 +87,40 @@ sudo pacman -S niri noctalia-shell cachyos-niri-noctalia \
 # Lihat packages.txt untuk daftar lengkap yang pernah di-install
 ```
 
-### 2. Tema (tidak disertakan — terlalu besar)
+### 2. Tema (otomatis via `install.sh`)
+
+`install.sh` mengunduh dan memasang tema dari GitHub vinceliuice:
+
+| Tema | Repo | Untuk |
+|---|---|---|
+| MacTahoe GTK | MacTahoe-gtk-theme | Sesi Niri |
+| MacTahoe icons | MacTahoe-icon-theme | Sesi Niri |
+| WhiteSur GTK | WhiteSur-gtk-theme | Sesi Plasma |
+| WhiteSur icons | WhiteSur-icon-theme | Sesi Plasma |
+| WhiteSur cursors | WhiteSur-cursor-theme | Semua sesi |
+| WhiteSur KDE | WhiteSur-kde | Aurorae, Kvantum, Plasma |
+
+Butuh `git` dan `sassc`. Cache clone ada di `~/.cache/likeamac-themes`.
 
 ```bash
-# MacTahoe (untuk sesi Niri)
-git clone https://github.com/vinceliuice/MacTahoe-gtk-theme
-cd MacTahoe-gtk-theme && ./install.sh -d
-
-git clone https://github.com/vinceliuice/MacTahoe-icon-theme
-cd MacTahoe-icon-theme && ./install.sh -d
-
-# WhiteSur (untuk sesi Plasma)
-git clone https://github.com/vinceliuice/WhiteSur-gtk-theme
-cd WhiteSur-gtk-theme && ./install.sh -t all -c dark -N glassy
-
-git clone https://github.com/vinceliuice/WhiteSur-icon-theme
-cd WhiteSur-icon-theme && ./install.sh -a
-
-git clone https://github.com/vinceliuice/WhiteSur-cursor-theme
-cd WhiteSur-cursor-theme && ./install.sh
+# Lewati unduhan tema (kalau sudah terpasang):
+INSTALL_THEMES=0 ./install.sh
 ```
 
 ### 3. Plasma widgets (opsional)
 
 Install **AppGrid** dan **WaveTask** dari KDE Store / AUR jika pakai sesi Plasma.
 
-### 4. Link dotfiles
+### 4. Install dotfiles
 
 ```bash
-git clone <repo-url> ~/dotfiles
+git clone https://github.com/arifianilhamnrr/likeamac.git ~/dotfiles
 cd ~/dotfiles
 chmod +x install.sh
 ./install.sh
 
-# Untuk session switcher (butuh sudo):
-INSTALL_SWITCH_DESKTOP=1 ./install.sh
+# Tanpa unduh tema + dengan session switcher:
+INSTALL_THEMES=0 INSTALL_SWITCH_DESKTOP=1 ./install.sh
 ```
 
 ### 5. Ganti sesi desktop
@@ -170,3 +169,11 @@ dotfiles/
 ## Wallpaper
 
 Disimpan di `~/Pictures/Wallpapers/` (tidak di-repo).
+
+## Environment variables
+
+| Variable | Default | Fungsi |
+|---|---|---|
+| `INSTALL_THEMES` | `1` | Unduh & install MacTahoe + WhiteSur themes |
+| `INSTALL_SWITCH_DESKTOP` | `0` | Install `switch-niri` / `switch-plasma` ke `/usr/local/bin` |
+| `THEMES_CACHE` | `~/.cache/likeamac-themes` | Lokasi cache git clone tema |
