@@ -1,38 +1,25 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-SESSION="${1:-}"
-ACTION="${2:-}"
+ACTION="${1:-}"
 
 usage() {
     cat <<'EOF'
-Usage: switch-desktop <niri|plasma> [now]
+Usage: switch-niri [now]
 
   switch-niri          Set Niri as default session (next login)
   switch-niri now      Switch to Niri and logout now
-  switch-plasma        Set Plasma as default session (next login)
-  switch-plasma now    Switch to Plasma and logout now
 EOF
 }
 
-if [[ -z "$SESSION" ]]; then
-    usage
-    exit 1
-fi
-
-case "$SESSION" in
-    niri)   DESKTOP="niri.desktop" ;;
-    plasma) DESKTOP="plasma.desktop" ;;
+case "${ACTION:-}" in
     -h|--help|help)
         usage
         exit 0
         ;;
-    *)
-        echo "Unknown session: $SESSION"
-        echo "Available: niri, plasma"
-        exit 1
-        ;;
 esac
+
+DESKTOP="niri.desktop"
 
 if [[ ! -f "/usr/share/wayland-sessions/$DESKTOP" ]]; then
     echo "Session not installed: $DESKTOP"
@@ -47,13 +34,12 @@ fi
 mkdir -p "$HOME/.config/sddm"
 printf '%s\n' "$DESKTOP" > "$HOME/.config/sddm/.desktop"
 
-LABEL="$(tr '[:lower:]' '[:upper:]' <<< "${SESSION:0:1}")${SESSION:1}"
-echo "Default session set to $LABEL ($DESKTOP)"
+echo "Default session set to Niri ($DESKTOP)"
 
 if [[ "$ACTION" == "now" ]]; then
     echo "Logging out in 3 seconds... (Ctrl+C to cancel)"
     sleep 3
     loginctl terminate-user "$USER"
 else
-    echo "Run 'switch-$SESSION now' to logout and apply immediately."
+    echo "Run 'switch-niri now' to logout and apply immediately."
 fi

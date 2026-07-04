@@ -25,7 +25,7 @@ set -e QT_WAYLAND_DISABLE_WINDOWDECORATION
 set -gx GTK_CSD 1
 set -gx ELECTRON_OZONE_PLATFORM_HINT wayland
 
-# Default terminal (GTK / WhiteSur decorations)
+# Default terminal
 set -gx TERMINAL kgx
 
 # Qt apps (Telegram, etc.) — macOS-style traffic lights on Wayland

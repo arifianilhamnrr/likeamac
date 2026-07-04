@@ -7,12 +7,6 @@ gpu-screen-recorder 5.13.9-2.1
 gpu-screen-recorder-notification 1.3.3-1.1
 gpu-screen-recorder-ui 1.12.5-1.1
 inter-font 4.1-1
-kvantum 1.1.8-1.1
 noto-fonts 1:2026.07.01-1
 noto-fonts-cjk 20240730-1
 noto-fonts-emoji 1:2.051-1
-orchis-theme 2025_04_25-2
-spotify-launcher 0.6.6-1.1
-spotify-player 0.24.0-1.1
-spotify-qt-bin 4.0.4-1
-spotifyd 0.4.2-1.1

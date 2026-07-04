@@ -1,2 +1,2 @@
 #!/usr/bin/env bash
-exec "$(dirname "$0")/switch-desktop" niri "$@"
+exec "$(dirname "$0")/switch-desktop" "$@"
