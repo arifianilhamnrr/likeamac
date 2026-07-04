@@ -62,6 +62,42 @@ install_themes() {
     echo "  themes installed"
 }
 
+install_termius() {
+    if ! command -v flatpak >/dev/null 2>&1; then
+        echo "  skipping Termius setup (flatpak not installed)"
+        return 0
+    fi
+    if ! flatpak info com.termius.Termius >/dev/null 2>&1; then
+        echo "  skipping Termius setup (com.termius.Termius not installed)"
+        return 0
+    fi
+
+    echo "==> Patching Termius (fix minimize/maximize on Linux)"
+
+    local asar_path patch_tmp
+    asar_path="$(find /var/lib/flatpak/app/com.termius.Termius -path '*/files/extra/termius/resources/app.asar' 2>/dev/null | head -1)"
+    if [[ -z "$asar_path" ]]; then
+        echo "  warning: could not find Termius app.asar to patch"
+        return 0
+    fi
+
+    if python3 "$DOTFILES/scripts/patch-termius-asar.py" --check "$asar_path"; then
+        echo "  Termius app.asar already patched"
+        return 0
+    fi
+
+    patch_tmp="$(mktemp)"
+    cp "$asar_path" "$patch_tmp"
+    python3 "$DOTFILES/scripts/patch-termius-asar.py" "$patch_tmp"
+    if ! sudo install -m 644 -o root -g root "$patch_tmp" "$asar_path"; then
+        echo "  warning: sudo required to patch Termius app.asar (run install.sh again)"
+        rm -f "$patch_tmp"
+        return 0
+    fi
+    rm -f "$patch_tmp"
+    echo "  installed patched Termius app.asar"
+}
+
 link_configs() {
     echo "==> Linking configs from $DOTFILES"
 
@@ -120,6 +156,7 @@ else
 fi
 
 link_configs
+install_termius
 
 echo ""
 echo "Done!"
