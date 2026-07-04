@@ -74,6 +74,8 @@ install_termius() {
 
     echo "==> Configuring Termius (traffic-light decorations)"
 
+    local termius_config="$HOME/.var/app/com.termius.Termius/config"
+
     mkdir -p "$HOME/.local/share/flatpak/overrides"
     cp "$DOTFILES/config/flatpak/overrides/com.termius.Termius" \
         "$HOME/.local/share/flatpak/overrides/com.termius.Termius"
@@ -82,17 +84,21 @@ install_termius() {
     echo "  applied flatpak overrides"
 
     mkdir -p "$HOME/.local/share/applications"
-    cp "$DOTFILES/config/applications/com.termius.Termius.desktop" \
-        "$HOME/.local/share/applications/com.termius.Termius.desktop"
+    sed "s|@TERMius_LAUNCH@|${termius_config}/termius-launch.sh|g" \
+        "$DOTFILES/config/applications/com.termius.Termius.desktop" \
+        > "$HOME/.local/share/applications/com.termius.Termius.desktop"
     echo "  installed desktop entry"
 
-    local termius_config="$HOME/.var/app/com.termius.Termius/config"
     mkdir -p "$termius_config/gtk-3.0" "$termius_config/gtk-4.0"
     rm -f "$termius_config/gtk-3.0/settings.ini" "$termius_config/gtk-4.0/settings.ini"
     cp "$DOTFILES/config/gtk-3.0/settings.ini" "$termius_config/gtk-3.0/settings.ini"
     cp "$DOTFILES/config/gtk-4.0/settings.ini" "$termius_config/gtk-4.0/settings.ini"
     cp "$DOTFILES/config/termius-flags.conf" "$termius_config/termius-flags.conf"
-    echo "  installed Termius sandbox GTK + flags config"
+    cp "$DOTFILES/scripts/patch-termius-asar.py" "$termius_config/patch-termius-asar.py"
+    cp "$DOTFILES/bin/termius-launch.sh" "$termius_config/termius-launch.sh"
+    chmod +x "$termius_config/termius-launch.sh" "$termius_config/patch-termius-asar.py"
+    rm -rf "$termius_config/termius-runtime"
+    echo "  installed Termius launcher + asar patch"
 }
 
 link_configs() {
