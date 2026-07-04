@@ -1,0 +1,16 @@
+/* Titlebar: rounded top only, flat bottom (macOS style) */
+.titlebar,
+.titlebar.background,
+headerbar.titlebar,
+headerbar.default-decoration {
+  border-bottom-left-radius: 0 !important;
+  border-bottom-right-radius: 0 !important;
+}
+
+decoration {
+  border-radius: 12px 12px 0 0;
+}
+
+decoration:backdrop {
+  border-radius: 12px 12px 0 0;
+}
