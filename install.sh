@@ -97,7 +97,6 @@ install_termius() {
     cp "$DOTFILES/scripts/patch-termius-asar.py" "$termius_config/patch-termius-asar.py"
     cp "$DOTFILES/bin/termius-launch.sh" "$termius_config/termius-launch.sh"
     chmod +x "$termius_config/termius-launch.sh" "$termius_config/patch-termius-asar.py"
-    rm -rf "$termius_config/termius-runtime"
     echo "  installed Termius launcher + asar patch"
 }
 
