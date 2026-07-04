@@ -1,8 +1,0 @@
-[Context]
-sockets=wayland;fallback-x11;
-
-[Environment]
-GTK_CSD=1
-GTK_THEME=MacTahoe-Dark
-ELECTRON_OZONE_PLATFORM_HINT=x11
-XCURSOR_PATH=/run/host/user-share/icons:/run/host/share/icons

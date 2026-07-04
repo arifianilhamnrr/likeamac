@@ -62,66 +62,6 @@ install_themes() {
     echo "  themes installed"
 }
 
-install_termius() {
-    if ! command -v flatpak >/dev/null 2>&1; then
-        echo "  skipping Termius setup (flatpak not installed)"
-        return 0
-    fi
-    if ! flatpak info com.termius.Termius >/dev/null 2>&1; then
-        echo "  skipping Termius setup (com.termius.Termius not installed)"
-        return 0
-    fi
-
-    echo "==> Configuring Termius (traffic-light decorations)"
-
-    local termius_config="$HOME/.var/app/com.termius.Termius/config"
-
-    mkdir -p "$HOME/.local/share/flatpak/overrides"
-    cp "$DOTFILES/config/flatpak/overrides/com.termius.Termius" \
-        "$HOME/.local/share/flatpak/overrides/com.termius.Termius"
-    flatpak override --user com.termius.Termius \
-        --unset-env=QT_WAYLAND_DISABLE_WINDOWDECORATION
-    echo "  applied flatpak overrides"
-
-    mkdir -p "$HOME/.local/share/applications"
-    cp "$DOTFILES/config/applications/com.termius.Termius.desktop" \
-        "$HOME/.local/share/applications/com.termius.Termius.desktop"
-    echo "  installed desktop entry"
-
-    mkdir -p "$termius_config/gtk-3.0" "$termius_config/gtk-4.0"
-    rm -f "$termius_config/gtk-3.0/settings.ini" "$termius_config/gtk-4.0/settings.ini"
-    cp "$DOTFILES/config/gtk-3.0/settings.ini" "$termius_config/gtk-3.0/settings.ini"
-    cp "$DOTFILES/config/gtk-4.0/settings.ini" "$termius_config/gtk-4.0/settings.ini"
-    cp "$DOTFILES/config/termius-flags.conf" "$termius_config/termius-flags.conf"
-
-    local asar_path patch_stamp patch_tmp
-    asar_path="$(find /var/lib/flatpak/app/com.termius.Termius -path '*/files/extra/termius/resources/app.asar' 2>/dev/null | head -1)"
-    if [[ -z "$asar_path" ]]; then
-        echo "  warning: could not find Termius app.asar to patch"
-        return 0
-    fi
-
-    patch_stamp="${termius_config}/.asar-patch-stamp"
-    if python3 "$DOTFILES/scripts/patch-termius-asar.py" --check "$asar_path"; then
-        echo "  Termius app.asar already patched"
-    else
-        patch_tmp="$(mktemp)"
-        cp "$asar_path" "$patch_tmp"
-        python3 "$DOTFILES/scripts/patch-termius-asar.py" "$patch_tmp"
-        if ! sudo install -m 644 -o root -g root "$patch_tmp" "$asar_path"; then
-            echo "  warning: sudo required to patch Termius app.asar (run install.sh again)"
-            rm -f "$patch_tmp"
-            return 0
-        fi
-        rm -f "$patch_tmp"
-        echo "  installed patched Termius app.asar"
-    fi
-    printf '%s\n' "$asar_path" > "$patch_stamp"
-
-    rm -rf "$termius_config/termius-runtime"
-    echo "  cleaned old Termius runtime copy"
-}
-
 link_configs() {
     echo "==> Linking configs from $DOTFILES"
 
@@ -180,7 +120,6 @@ else
 fi
 
 link_configs
-install_termius
 
 echo ""
 echo "Done!"
